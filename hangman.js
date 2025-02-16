@@ -2,7 +2,7 @@ let word = '';
 let wordDisplay = document.getElementById("wordDisplay")
 let incorrectGuesses = document.getElementById("incorrectGuesses")
 let incorrectGuessCount = 0;
-let maxIncorrectGuesses = 6;
+let maxIncorrectGuesses = 11;
 let guessedLetters = [];
 let gameStarted = false;
 
