@@ -2,8 +2,15 @@ let word = '';
 let wordDisplay = document.getElementById("wordDisplay")
 let incorrectGuesses = document.getElementById("incorrectGuesses")
 let incorrectGuessCount = 0;
-let maxIncorrectGuesses = 11;
+let maxIncorrectGuesses = 6;
 let guessedLetters = [];
+
+document.addEventListener('keydown', (event) => {
+    const letter = event.key.toLowerCase();
+    if (letter >= 'a' && letter <= 'z') {
+        guessLetter(letter);
+    }
+});
 
 function guessLetter(letter) {
     if (guessedLetters.includes(letter)) {
@@ -13,7 +20,7 @@ function guessLetter(letter) {
 
     let correctGuess = false;
     let wordDisplayContent = "";
-
+    
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
             wordDisplayContent += letter + " ";
@@ -43,36 +50,35 @@ function checkWinCondition() {
 
 function gameOver(won) {
     if (won) {
-        alert(`Congratulations! You guessed the word! (${word})`);
+        alert("Congratulations! You guessed the word!");
     } else {
         alert("Game Over! The word was: " + word);
     }
-    resetGame()
+    resetGame();
 }
 
-
 function startGame() {
-    word = document.getElementById("word").value.toLowerCase()
+    word = document.getElementById("word").value.toLowerCase();
     document.getElementById("wordInput").style.display = "none";
-    initDisplay()
+    initDisplay();
 }
 
 function initDisplay() {
     wordDisplay.innerHTML = "";
     for (let i = 0; i < word.length; i++) {
-        wordDisplay.innerHTML += "_ "
+        wordDisplay.innerHTML += "_ ";
     }
-    generateLetter()
+    generateLetterButtons();
 }
 
-function generateLetter() {
-    let letters = document.getElementById("letterButtons")
+function generateLetterButtons() {
+    let letters = document.getElementById("letterButtons");
     letters.innerHTML = "";
     for (let i = 97; i <= 122; i++) {
-        let letter = String.fromCharCode(i)
-        let button = document.createElement("button")
+        let letter = String.fromCharCode(i);
+        let button = document.createElement("button");
         button.innerHTML = letter;
-        button.classList.add("letter-button")
+        button.classList.add("letter-button");
         button.onclick = () => guessLetter(letter);
         letters.appendChild(button);
     }
@@ -80,8 +86,10 @@ function generateLetter() {
 
 function resetGame() {
     document.getElementById("wordInput").style.display = "block";
-    wordDisplay.innerHTML = "_ _ _ _ _"
+    wordDisplay.innerHTML = "";
     incorrectGuesses.innerHTML = "Incorrect guesses: ";
     document.getElementById("word").value = "";
     document.getElementById("letterButtons").innerHTML = "";
+    incorrectGuessCount = 0;
+    guessedLetters = [];
 }
