@@ -4,10 +4,11 @@ let incorrectGuesses = document.getElementById("incorrectGuesses")
 let incorrectGuessCount = 0;
 let maxIncorrectGuesses = 6;
 let guessedLetters = [];
+let gameStarted = false;
 
 document.addEventListener('keydown', (event) => {
     const letter = event.key.toLowerCase();
-    if (letter >= 'a' && letter <= 'z') {
+    if (letter >= 'a' && letter <= 'z' && gameStarted) {
         guessLetter(letter);
     }
 });
@@ -20,7 +21,7 @@ function guessLetter(letter) {
 
     let correctGuess = false;
     let wordDisplayContent = "";
-    
+
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
             wordDisplayContent += letter + " ";
@@ -50,7 +51,7 @@ function checkWinCondition() {
 
 function gameOver(won) {
     if (won) {
-        alert("Congratulations! You guessed the word!");
+        alert(`Congratulations! You guessed the word! (${word})`);
     } else {
         alert("Game Over! The word was: " + word);
     }
@@ -58,6 +59,7 @@ function gameOver(won) {
 }
 
 function startGame() {
+    gameStarted = true;
     word = document.getElementById("word").value.toLowerCase();
     document.getElementById("wordInput").style.display = "none";
     initDisplay();
